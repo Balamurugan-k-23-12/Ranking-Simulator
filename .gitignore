@@ -1,0 +1,4 @@
+
+# Large generated datasets / indexes
+**/catalogue.parquet
+**/catalogue_bm25.pkl
