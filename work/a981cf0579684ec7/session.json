@@ -1,0 +1,8 @@
+{
+  "session_id": "a981cf0579684ec7",
+  "world_id": "w908832361965e48e",
+  "round": 1,
+  "created_at": 1788591183.772012,
+  "status": "initialized",
+  "model": "bm25_only_retriever"
+}

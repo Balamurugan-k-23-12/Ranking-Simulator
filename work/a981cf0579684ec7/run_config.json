@@ -1,0 +1,6 @@
+{
+  "model": "BM25OnlyRetriever",
+  "method": "BM25 Lexical Ranking",
+  "round": 1,
+  "session_id": "a981cf0579684ec7"
+}

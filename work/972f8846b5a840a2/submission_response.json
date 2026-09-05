@@ -1,0 +1,106 @@
+{
+  "world_id": "w908832361965e48e",
+  "round": 1,
+  "valid": true,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "error_count": 0,
+    "truncated": false
+  },
+  "slate_size": 20,
+  "n_pairs": 14216,
+  "n_impressions": 14400,
+  "timing": {
+    "server_validation_simulation_s": 260.87935744000424
+  },
+  "score": {
+    "expected_value_per_impression": 0.061432854216314406,
+    "sampled_value_per_impression": 0.060460763888879734,
+    "expected_total": 17692.66201429855,
+    "n_impressions_graded": 288000
+  },
+  "baselines": {
+    "random": {
+      "expected_value_per_impression": 0.03439413112991255
+    },
+    "bm25": {
+      "expected_value_per_impression": 0.07086650870412303
+    },
+    "semantic": {
+      "expected_value_per_impression": 0.07931630868816095
+    }
+  },
+  "deltas_vs_baselines": {
+    "random": 0.02703872308640186,
+    "bm25": -0.009433654487808626,
+    "semantic": -0.01788345447184654
+  },
+  "actions": {
+    "action_counts": {
+      "cart": 18311,
+      "click": 22444,
+      "purchase": 9675,
+      "seen": 237570
+    },
+    "exclusive_reach": {
+      "cart": {
+        "count": 18311,
+        "unique_items": 2435,
+        "reach_rate": 0.7626056999686814
+      },
+      "click": {
+        "count": 22444,
+        "unique_items": 2530,
+        "reach_rate": 0.7923582837456937
+      },
+      "purchase": {
+        "count": 9675,
+        "unique_items": 1986,
+        "reach_rate": 0.6219855934857501
+      },
+      "seen": {
+        "count": 237570,
+        "unique_items": 3115,
+        "reach_rate": 0.975571562793611
+      }
+    },
+    "n_served_impressions": 288000
+  },
+  "submission_coverage": {
+    "unique_ranked_items": 2507,
+    "catalogue_coverage_rate": 0.02507
+  },
+  "traffic_buckets": {
+    "head": {
+      "n_pairs": 7026,
+      "share_of_pairs": 0.4942318514350028,
+      "aggregate_note": "Per-query scores are omitted to avoid answer extraction. Bucket sizes reflect traffic frequency."
+    },
+    "middle": {
+      "n_pairs": 3966,
+      "share_of_pairs": 0.2789814293753517,
+      "aggregate_note": "Per-query scores are omitted to avoid answer extraction. Bucket sizes reflect traffic frequency."
+    },
+    "tail": {
+      "n_pairs": 3224,
+      "share_of_pairs": 0.22678671918964546,
+      "aggregate_note": "Per-query scores are omitted to avoid answer extraction. Bucket sizes reflect traffic frequency."
+    },
+    "overall_expected_value_per_impression": 0.061432854216314406
+  },
+  "user_segments": {
+    "pair_counts_by_segment": {
+      "bargain": 1552,
+      "brand_loyal": 1605,
+      "general": 1878,
+      "gifter": 1784,
+      "impulsive": 1967,
+      "minimalist": 1530,
+      "premium": 1966,
+      "techie": 1934
+    },
+    "overall_expected_value_per_impression": 0.061432854216314406,
+    "aggregate_note": "Per-segment expected values are omitted to limit extraction channels."
+  }
+}

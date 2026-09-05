@@ -1,0 +1,15 @@
+{
+  "session_id": "d677058ffb2c47a4",
+  "world_id": "w908832361965e48e",
+  "round": 1,
+  "created_at": 1788594146.6625679,
+  "status": "round2_in_progress",
+  "model": "hybrid_rrf_bm25_semantic_quality",
+  "rounds_used": [
+    1,
+    2
+  ],
+  "training_source": "round_1_actions_and_submission",
+  "same_round_actions_used_for_training": false,
+  "updated_at": 1788596748.1136131
+}
