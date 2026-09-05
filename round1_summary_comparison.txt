@@ -1,0 +1,184 @@
+================================================================
+   ROUND 1 EXPERIMENT SUMMARY — Semantic vs BM25 vs Hybrid RRF
+================================================================
+World ID: w908832361965e48e
+Round: 1
+Slate size: 20
+Traffic: 14,216 (query_id, user_id) pairs -> 14,400 impressions -> 288,000 graded impressions
+
+
+----------------------------------------------------------------
+1. HEADLINE RESULTS
+----------------------------------------------------------------
+
+| Metric                              | Semantic-only | BM25-only  | Hybrid RRF |
+|--------------------------------------|--------------:|-----------:|-----------:|
+| Expected value / impression          | 0.061433      | 0.071267   | 0.073098   |
+| Sampled value / impression           | 0.060461      | 0.070188   | 0.072083   |
+| Expected total value                 | 17,692.66     | 20,524.96  | 21,052.30  |
+| Server validation/sim time (s)       | 260.88        | 320.36     | 738.87     |
+
+Ranking by expected value/impression (higher is better):
+  1st: Hybrid RRF    -> 0.073098
+  2nd: BM25-only      -> 0.071267
+  3rd: Semantic-only  -> 0.061433
+
+Hybrid RRF is the best-performing strategy of the three, beating BM25-only by
++2.6% relative and Semantic-only by +19.0% relative on expected value per
+impression.
+
+
+----------------------------------------------------------------
+2. HOW EACH RUN COMPARES TO THE FIXED BASELINES
+----------------------------------------------------------------
+
+Baselines are identical across all three runs (they're computed once per
+world, not per submission):
+  - Random baseline:    0.034394
+  - BM25 baseline:      0.070867
+  - Semantic baseline:  0.079316
+
+| Run           | Delta vs Random | Delta vs BM25 baseline | Delta vs Semantic baseline |
+|----------------|------------------:|--------------------------:|------------------------------:|
+| Semantic-only  | +0.027039         | -0.009434                  | -0.017883                      |
+| BM25-only      | +0.036873         | +0.000401                  | -0.008049                      |
+| Hybrid RRF     | +0.038704         | +0.002232                  | -0.006218                      |
+
+Key read:
+  - Every run beats random by a wide margin — all three retrieval strategies
+    are meaningfully better than showing arbitrary items.
+  - NONE of the three runs beat the semantic baseline outright. The gap to
+    the semantic baseline shrinks as you move from semantic-only (-0.0179)
+    to BM25-only (-0.0080) to hybrid (-0.0062) — hybrid gets closest, but
+    still falls short of that ceiling.
+  - Only BM25-only and Hybrid RRF beat the BM25 baseline (by a small margin
+    each: +0.0004 and +0.0022 respectively). Semantic-only actually
+    underperforms the BM25 baseline by -0.0094 — worth noting, since a pure
+    semantic *submission* scoring below the semantic *baseline* by such a
+    wide margin (-0.0179) suggests the semantic-only run's slate quality was
+    materially worse than whatever reference ranking the baseline uses, not
+    just noise.
+
+
+----------------------------------------------------------------
+3. USER ACTION BREAKDOWN
+----------------------------------------------------------------
+
+| Action    | Semantic-only | BM25-only | Hybrid RRF |
+|-----------|---------------:|-----------:|-----------:|
+| seen      | 237,570        | 232,660    | 231,528    |
+| click     | 22,444         | 23,155     | 23,489     |
+| cart      | 18,311         | 20,409     | 20,817     |
+| purchase  | 9,675          | 11,776     | 12,166     |
+
+All three sum to 288,000 served impressions.
+
+Observations:
+  - Purchase count climbs steadily: Semantic-only (9,675) -> BM25-only
+    (11,776) -> Hybrid (12,166). Hybrid drives ~25.8% more purchases than
+    semantic-only and ~3.3% more than BM25-only.
+  - Cart adds follow the same pattern: Hybrid (20,817) is the highest,
+    ~13.7% above semantic-only and ~2.0% above BM25-only.
+  - Click counts are close across all three (22.4K-23.5K), with hybrid
+    slightly ahead — most of hybrid's advantage over BM25-only shows up
+    further down the funnel (cart/purchase), not just at click.
+  - "Seen" count is lowest for hybrid, meaning hybrid converts a larger
+    share of impressions into an action rather than a no-action "seen" —
+    consistent with it having the best overall expected value.
+
+
+----------------------------------------------------------------
+4. EXCLUSIVE REACH (UNIQUE ITEMS DRIVING EACH ACTION)
+----------------------------------------------------------------
+
+| Action    | Semantic-only (items / reach) | BM25-only (items / reach) | Hybrid (items / reach) |
+|-----------|--------------------------------:|-----------------------------:|---------------------------:|
+| seen      | 3,115 / 97.56%                  | 2,720 / 97.25%                | 3,061 / 97.48%              |
+| click     | 2,530 / 79.24%                  | 2,145 / 76.69%                | 2,474 / 78.79%              |
+| cart      | 2,435 / 76.26%                  | 2,112 / 75.51%                | 2,420 / 77.07%              |
+| purchase  | 1,986 / 62.20%                  | 1,883 / 67.32%                | 2,116 / 67.39%              |
+
+Observations:
+  - BM25-only concentrates purchases on fewer unique items (1,883) than
+    semantic-only (1,986) but with a notably higher purchase reach rate
+    (67.32% vs 62.20%) — BM25's narrower candidate set converts more
+    efficiently per unique item shown.
+  - Hybrid has the best of both worlds here: highest purchase reach rate
+    (67.39%, edging out BM25-only) AND the most unique items driving
+    purchases (2,116) — it's not just narrowly optimizing for a small set
+    of "safe" items, it's finding a broader set of purchase-worthy items
+    while still converting them well.
+
+
+----------------------------------------------------------------
+5. CATALOGUE COVERAGE
+----------------------------------------------------------------
+
+| Run           | Unique ranked items | Catalogue coverage |
+|----------------|-----------------------:|----------------------:|
+| Semantic-only  | 2,507                   | 2.507%                 |
+| BM25-only      | 2,110                   | 2.110%                 |
+| Hybrid RRF     | 2,450                   | 2.450%                 |
+
+Semantic-only surfaces the most distinct items overall, but as shown above,
+a large share of that diversity doesn't translate into purchases (lowest
+purchase reach rate of the three). BM25-only is the most concentrated
+(fewest unique items), while Hybrid sits close to semantic-only in raw
+diversity but converts noticeably better — reinforcing that hybrid isn't
+trading off diversity for performance, it's improving both simultaneously
+relative to BM25-only.
+
+
+----------------------------------------------------------------
+6. TRAFFIC BUCKET & USER SEGMENT SPLITS
+----------------------------------------------------------------
+
+Traffic bucket sizes are identical across all three runs (same underlying
+traffic file, scored independently each time):
+  - Head:   7,026 pairs (49.42% of traffic)
+  - Middle: 3,966 pairs (27.90% of traffic)
+  - Tail:   3,224 pairs (22.68% of traffic)
+
+User segment pair counts are also identical across all three runs:
+  bargain: 1,552 | brand_loyal: 1,605 | general: 1,878 | gifter: 1,784 |
+  impulsive: 1,967 | minimalist: 1,530 | premium: 1,966 | techie: 1,934
+
+Per-bucket and per-segment expected values are intentionally withheld by
+the simulator ("omitted to avoid answer extraction" / "omitted to limit
+extraction channels"), so no head/tail or segment-level performance
+breakdown is available from these reports — only the overall
+expected-value-per-impression figure applies uniformly across all buckets
+and segments for each run.
+
+
+----------------------------------------------------------------
+7. TIMING NOTE
+----------------------------------------------------------------
+
+Server-side validation/simulation time increased substantially across the
+three runs: 260.9s (semantic-only) -> 320.4s (BM25-only) -> 738.9s (hybrid).
+This is expected — hybrid RRF does more work per query (candidate retrieval
+across two channels plus a quality re-rank), so both the client-side build
+and the server-side simulation take longer. This is a runtime cost, not a
+quality signal — it doesn't affect the expected value comparison above.
+
+
+----------------------------------------------------------------
+8. BOTTOM LINE
+----------------------------------------------------------------
+
+  - Hybrid RRF (BM25 + Semantic + Quality) is the best-performing strategy
+    of the three tested in Round 1, both on expected value per impression
+    and on downstream actions (clicks, carts, purchases).
+  - BM25-only is a strong second — it essentially matches its own baseline
+    and clearly beats semantic-only.
+  - Semantic-only underperformed both other strategies and even its own
+    baseline by a wide margin, suggesting the pure top-20 semantic slate
+    build (cosine similarity only, no lexical or quality signal) leaves
+    meaningful value on the table compared to what a well-tuned semantic
+    baseline achieves.
+  - None of the three submissions beat the semantic baseline outright,
+    which may be worth investigating further in Round 2 (e.g. via the
+    LambdaMART reranker) — closing that remaining ~0.006-0.018 gap is the
+    next opportunity.
+================================================================
